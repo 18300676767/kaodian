@@ -1,0 +1,32 @@
+前端（frontend/package.json）
+dependencies:
+react: ^18.2.0
+react-dom: ^18.2.0
+react-router-dom: ^6.23.1
+axios: ^1.10.0
+typescript: ^4.9.5
+@types/react: ^18.2.70
+@types/react-dom: ^18.2.19
+@types/react-router-dom: ^5.3.3
+@types/node: ^16.18.126
+@types/jest: ^27.5.2
+@testing-library/dom: ^10.4.0
+web-vitals: ^2.1.4
+devDependencies:
+tailwindcss: ^3.4.17
+postcss: ^8.5.6
+autoprefixer: ^10.4.21
+@tailwindcss/postcss: ^4.1.11
+@testing-library/react: ^16.3.0
+@testing-library/jest-dom: ^6.6.3
+@testing-library/user-event: ^14.6.1
+jest: ^27.5.1
+jest-environment-jsdom: ^30.0.4
+react-scripts: 5.0.1
+后端（backend/requirements.txt）
+fastapi==0.115.14
+uvicorn==0.35.0
+sqlalchemy==2.0.41
+pymysql==1.1.1
+python-jose[cryptography]==3.5.0
+passlib[bcrypt]==1.7.4

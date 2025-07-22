@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-07-08 12:15:35",
+  "backend_tests": {
+    "status": "failed",
+    "coverage": "unknown"
+  },
+  "frontend_tests": {
+    "status": "completed",
+    "coverage": "available"
+  },
+  "recommendations": [
+    "后端测试失败，需要修复测试问题"
+  ]
+}

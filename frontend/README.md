@@ -121,19 +121,12 @@ kaodian/
 ├── frontend/                   # 前端应用
 │   ├── src/
 │   │   ├── components/        # React组件
-│   │   │   ├── Dashboard.tsx  # 主仪表板
-│   │   │   ├── Login.tsx      # 登录组件
-│   │   │   ├── Register.tsx   # 注册组件
-│   │   │   ├── UserManagement.tsx      # 用户管理
-│   │   │   ├── ExamPointManagement.tsx # 考点管理
-│   │   │   └── ExamPaperManagement.tsx # 试题管理
 │   │   ├── services/          # API服务层
 │   │   ├── utils/             # 工具函数
 │   │   ├── config/            # 配置文件
 │   │   └── App.tsx            # 主应用组件
 │   ├── package.json           # Node.js依赖
 │   └── tailwind.config.js     # Tailwind配置
-├── tests/                      # 测试文件
 ├── docs/                       # 文档目录
 └── README.md                   # 项目说明
 ```
@@ -179,73 +172,13 @@ kaodian/
 - ✅ 多格式文件支持（TXT、DOCX、PDF、MD）
 - ✅ 结构化数据输出
 
-## 🔐 安全特性
-
-- **JWT认证**：安全的用户认证机制
-- **密码加密**：使用bcrypt进行密码哈希
-- **文件验证**：上传文件类型和大小验证
-- **SQL注入防护**：使用ORM防止SQL注入
-- **CORS配置**：跨域请求安全控制
-- **输入验证**：Pydantic模型数据验证
-
 ## 📊 API接口
 
-### 认证相关
-- `POST /auth/register` - 用户注册
-- `POST /auth/login` - 用户登录
-- `GET /users/me` - 获取当前用户信息
+详细的API文档请查看：[API文档](frontend/docs/API.md)
 
-### 用户管理
-- `GET /users` - 获取用户列表
-- `PUT /users/{user_id}` - 更新用户信息
-- `PUT /users/{user_id}/approve` - 审核用户
-- `PUT /users/{user_id}/toggle-status` - 切换用户状态
-- `DELETE /users/{user_id}` - 删除用户
+## 🚀 部署
 
-### 考点管理
-- `GET /exam-points` - 获取考点列表
-- `POST /exam-points` - 创建考点
-- `PUT /exam-points/{id}` - 更新考点
-- `DELETE /exam-points/{id}` - 删除考点
-- `POST /exam-points/import` - 批量导入考点
-
-### 试题管理
-- `GET /exam-papers` - 获取试卷列表
-- `POST /exam-papers` - 创建试卷
-- `POST /exam-papers/upload` - 上传试卷文件
-- `POST /exam-papers/{paper_id}/extract-with-ollama` - AI提取试题
-- `GET /exam-questions` - 获取试题列表
-
-### 系统相关
-- `GET /health` - 健康检查
-- `GET /provinces` - 获取省份列表
-- `GET /provinces/{province_id}/cities` - 获取城市列表
-
-## 🎨 界面预览
-
-### 登录页面
-- 现代化设计风格
-- 渐变背景效果
-- 表单验证和错误提示
-- 响应式布局
-
-### 主仪表板
-- 功能模块卡片展示
-- 用户信息显示
-- 导航菜单
-- 实时状态更新
-
-### 考点管理
-- 数据表格展示
-- 搜索和筛选功能
-- 批量操作支持
-- 导入导出功能
-
-### 试题管理
-- 试卷列表管理
-- 试题详情查看
-- 文件上传界面
-- AI提取结果展示
+详细的部署指南请查看：[部署文档](frontend/docs/DEPLOYMENT.md)
 
 ## 🧪 测试
 
@@ -260,98 +193,14 @@ cd frontend
 npm test
 ```
 
-### 测试覆盖
-- 单元测试
-- 集成测试
-- API接口测试
-- 前端组件测试
+## 🔐 安全特性
 
-## 🚀 部署
-
-### 生产环境部署
-```bash
-# 后端部署
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8000
-
-# 前端部署
-cd frontend
-npm run build
-```
-
-### Docker部署（可选）
-```dockerfile
-# 后端Dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-```
-
-## 🔧 配置说明
-
-### 环境变量
-```bash
-# 数据库配置
-DATABASE_URL=mysql+pymysql://admin:111111@localhost:3306/kaodian
-
-# JWT配置
-SECRET_KEY=your-secret-key-here
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-
-# Ollama配置
-OLLAMA_BASE_URL=http://127.0.0.1:11434
-OLLAMA_MODEL=qwen2.5:7b
-
-# 文件上传配置
-UPLOAD_DIR=uploads
-MAX_FILE_SIZE=52428800
-```
-
-### 数据库配置
-- 支持MySQL 8.0+
-- 字符集：utf8mb4
-- 排序规则：utf8mb4_unicode_ci
-
-## 🐛 故障排除
-
-### 常见问题
-
-1. **数据库连接失败**
-   ```bash
-   # 检查MySQL服务状态
-   sudo systemctl status mysql
-   
-   # 检查数据库连接
-   mysql -u admin -p -h localhost
-   ```
-
-2. **前端无法连接后端**
-   - 确认后端服务正在运行
-   - 检查CORS配置
-   - 验证API地址和端口
-
-3. **AI功能无法使用**
-   - 确认Ollama服务已启动
-   - 检查模型是否已下载
-   - 验证Ollama配置
-
-4. **文件上传失败**
-   - 检查上传目录权限
-   - 验证文件大小限制
-   - 确认文件格式支持
-
-### 日志查看
-```bash
-# 后端日志
-tail -f backend/backend.log
-
-# 前端日志
-# 查看浏览器开发者工具控制台
-```
+- **JWT认证**：安全的用户认证机制
+- **密码加密**：使用bcrypt进行密码哈希
+- **文件验证**：上传文件类型和大小验证
+- **SQL注入防护**：使用ORM防止SQL注入
+- **CORS配置**：跨域请求安全控制
+- **输入验证**：Pydantic模型数据验证
 
 ## 🤝 贡献指南
 
@@ -369,7 +218,7 @@ tail -f backend/backend.log
 
 ## 📄 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
+本项目采用 MIT 许可证 - 查看 [LICENSE](frontend/LICENSE) 文件了解详情
 
 ## 👥 作者
 

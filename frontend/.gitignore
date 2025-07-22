@@ -122,12 +122,19 @@ backend/uploads/*
 backend/test.db
 backend/test.db.bak
 backend/*.log
+backend/__pycache__/
+backend/.coverage
+backend/htmlcov/
+backend/venv/
 frontend/build/
 frontend/.env
 frontend/.env.local
 frontend/.env.development.local
 frontend/.env.test.local
 frontend/.env.production.local
+frontend/node_modules/
+frontend/uploads/
+frontend/coverage/
 
 # Temporary files
 *.tmp
@@ -201,3 +208,16 @@ jspm_packages/
 
 # TernJS port file
 .tern-port
+
+# Test files
+test_reports/
+*.test.js
+*.test.ts
+*.test.tsx
+test_*.py
+*_test.py
+
+# Development files
+*.code-workspace
+manage.sh
+kaodian.json

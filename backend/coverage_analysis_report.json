@@ -1,0 +1,73 @@
+{
+  "summary": {
+    "total_points": 116,
+    "subject_count": 9,
+    "avg_complexity": 1.0,
+    "coverage_ranges": {
+      "中覆盖率(50-69%)": 70,
+      "低覆盖率(30-49%)": 39,
+      "高覆盖率(70%+)": 7
+    }
+  },
+  "subjects": {
+    "化学": {
+      "count": 8,
+      "avg_coverage": 54.0,
+      "avg_complexity": 1.0,
+      "suggestion": "理科科目覆盖率合理"
+    },
+    "历史": {
+      "count": 14,
+      "avg_coverage": 48.0,
+      "avg_complexity": 1.0,
+      "suggestion": "文科科目覆盖率合理"
+    },
+    "地理": {
+      "count": 9,
+      "avg_coverage": 48.0,
+      "avg_complexity": 1.0,
+      "suggestion": "文科科目覆盖率合理"
+    },
+    "政治": {
+      "count": 16,
+      "avg_coverage": 48.0,
+      "avg_complexity": 1.0,
+      "suggestion": "文科科目覆盖率合理"
+    },
+    "数学": {
+      "count": 30,
+      "avg_coverage": 65.46666666666667,
+      "avg_complexity": 1.0,
+      "suggestion": "数学考点覆盖率合理"
+    },
+    "物理": {
+      "count": 8,
+      "avg_coverage": 54.0,
+      "avg_complexity": 1.0,
+      "suggestion": "理科科目覆盖率合理"
+    },
+    "生物": {
+      "count": 9,
+      "avg_coverage": 51.0,
+      "avg_complexity": 1.0,
+      "suggestion": "文科科目覆盖率合理"
+    },
+    "英语": {
+      "count": 12,
+      "avg_coverage": 57.0,
+      "avg_complexity": 1.0,
+      "suggestion": "语言类科目覆盖率合理"
+    },
+    "语文": {
+      "count": 10,
+      "avg_coverage": 57.0,
+      "avg_complexity": 1.0,
+      "suggestion": "语言类科目覆盖率合理"
+    }
+  },
+  "complexity_analysis": {
+    "low": 116,
+    "medium": 0,
+    "high": 0
+  }
+}

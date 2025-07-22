@@ -1,0 +1,116 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.7, pytest-8.4.1, pluggy-1.6.0 -- /home/sun/miniconda3/bin/python
+cachedir: .pytest_cache
+rootdir: /home/sun/project/kaodian/backend
+configfile: pytest.ini
+plugins: asyncio-1.0.0, anyio-4.9.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 33 items
+
+test_pagination.py::test_pagination PASSED                               [  3%]
+tests/test_auth.py::TestAuthFunctions::test_password_hashing PASSED      [  6%]
+tests/test_auth.py::TestAuthFunctions::test_authenticate_user_success PASSED [  9%]
+tests/test_auth.py::TestAuthFunctions::test_authenticate_user_wrong_password PASSED [ 12%]
+tests/test_auth.py::TestAuthFunctions::test_authenticate_user_nonexistent PASSED [ 15%]
+tests/test_auth.py::TestAuthFunctions::test_create_access_token PASSED   [ 18%]
+tests/test_auth.py::TestAuthAPI::test_register_success PASSED            [ 21%]
+tests/test_auth.py::TestAuthAPI::test_register_duplicate_username PASSED [ 24%]
+tests/test_auth.py::TestAuthAPI::test_register_duplicate_email PASSED    [ 27%]
+tests/test_auth.py::TestAuthAPI::test_login_success PASSED               [ 30%]
+tests/test_auth.py::TestAuthAPI::test_login_wrong_password PASSED        [ 33%]
+tests/test_auth.py::TestAuthAPI::test_login_nonexistent_user PASSED      [ 36%]
+tests/test_auth.py::TestAuthAPI::test_get_current_user_success PASSED    [ 39%]
+tests/test_auth.py::TestAuthAPI::test_get_current_user_invalid_token PASSED [ 42%]
+tests/test_auth.py::TestAuthAPI::test_get_current_user_no_token PASSED   [ 45%]
+tests/test_auth.py::TestHealthCheck::test_health_check PASSED            [ 48%]
+tests/test_auth.py::TestHealthCheck::test_root_endpoint PASSED           [ 51%]
+tests/test_integration.py::TestIntegration::test_user_registration_and_login_flow PASSED [ 54%]
+tests/test_integration.py::TestIntegration::test_duplicate_registration_handling PASSED [ 57%]
+tests/test_integration.py::TestIntegration::test_authentication_flow PASSED [ 60%]
+tests/test_integration.py::TestIntegration::test_api_endpoints_availability PASSED [ 63%]
+tests/test_integration.py::TestIntegration::test_data_persistence PASSED [ 66%]
+tests/test_integration.py::TestIntegration::test_concurrent_requests ERROR [ 69%]
+tests/test_integration.py::TestIntegration::test_error_handling PASSED   [ 72%]
+tests/test_integration.py::TestIntegration::test_performance_basic ERROR [ 75%]
+tests/test_models.py::TestUserModel::test_create_user PASSED             [ 78%]
+tests/test_models.py::TestUserModel::test_user_repr PASSED               [ 81%]
+tests/test_models.py::TestUserModel::test_user_unique_constraints PASSED [ 84%]
+tests/test_models.py::TestUserModel::test_user_timestamps PASSED         [ 87%]
+tests/test_models.py::TestUserModel::test_user_data_types PASSED         [ 90%]
+tests/test_models.py::TestUserModel::test_user_field_lengths PASSED      [ 93%]
+tests/test_models.py::TestUserModel::test_user_required_fields PASSED    [ 96%]
+tests/test_models.py::TestUserModel::test_user_update_timestamp PASSED   [100%]
+
+==================================== ERRORS ====================================
+__________ ERROR at setup of TestIntegration.test_concurrent_requests __________
+file /home/sun/project/kaodian/backend/tests/test_integration.py, line 157
+      @pytest.mark.asyncio
+      @pytest.mark.skipif(DATABASE_URL.startswith('sqlite'), reason="SQLite不支持高并发写入")
+      async def test_concurrent_requests(self, async_client):
+          """测试并发请求处理"""
+          import asyncio
+
+          # 创建多个并发注册请求
+          async def register_user(user_id: int):
+              user_data = {
+                  "username": f"concurrent_user_{user_id}",
+                  "email": f"concurrent_{user_id}@test.com",
+                  "password": "testpass123"
+              }
+              return await async_client.post("/auth/register", json=user_data)
+
+          # 并发执行3个注册请求（减少并发数量以避免SQLite限制）
+          tasks = [register_user(i) for i in range(3)]
+          responses = await asyncio.gather(*tasks)
+
+          # 验证所有请求都成功
+          for response in responses:
+              assert response.status_code == status.HTTP_200_OK
+E       fixture 'async_client' not found
+>       available fixtures: _class_event_loop, _function_event_loop, _module_event_loop, _package_event_loop, _session_event_loop, anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, client, db_session, doctest_namespace, event_loop, event_loop_policy, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, test_user, test_user_data, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, unused_tcp_port, unused_tcp_port_factory, unused_udp_port, unused_udp_port_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/sun/project/kaodian/backend/tests/test_integration.py:157
+___________ ERROR at setup of TestIntegration.test_performance_basic ___________
+file /home/sun/project/kaodian/backend/tests/test_integration.py, line 194
+      @pytest.mark.asyncio
+      async def test_performance_basic(self, async_client):
+          """基础性能测试"""
+          import time
+
+          # 测试健康检查端点响应时间
+          start_time = time.time()
+          health_response = await async_client.get("/health")
+          end_time = time.time()
+
+          assert health_response.status_code == status.HTTP_200_OK
+          response_time = end_time - start_time
+
+          # 响应时间应该在合理范围内（小于1秒）
+          assert response_time < 1.0, f"健康检查响应时间过长: {response_time:.3f}秒"
+
+          # 测试注册端点响应时间
+          register_data = {
+              "username": "perf_test_user",
+              "email": "perf@test.com",
+              "password": "testpass123"
+          }
+
+          start_time = time.time()
+          register_response = await async_client.post("/auth/register", json=register_data)
+          end_time = time.time()
+
+          assert register_response.status_code == status.HTTP_200_OK
+          response_time = end_time - start_time
+
+          # 注册响应时间应该在合理范围内（小于2秒）
+          assert response_time < 2.0, f"注册响应时间过长: {response_time:.3f}秒"
+E       fixture 'async_client' not found
+>       available fixtures: _class_event_loop, _function_event_loop, _module_event_loop, _package_event_loop, _session_event_loop, anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, client, db_session, doctest_namespace, event_loop, event_loop_policy, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, test_user, test_user_data, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, unused_tcp_port, unused_tcp_port_factory, unused_udp_port, unused_udp_port_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/sun/project/kaodian/backend/tests/test_integration.py:194
+=========================== short test summary info ============================
+ERROR tests/test_integration.py::TestIntegration::test_concurrent_requests
+ERROR tests/test_integration.py::TestIntegration::test_performance_basic
+================== 31 passed, 22 warnings, 2 errors in 5.08s ===================
