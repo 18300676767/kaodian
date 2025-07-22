@@ -2,7 +2,10 @@
 
 {
   "folders": [
+  
     {
+      "path": "."
+    },
       "path": "./frontend"
     },
     {
@@ -10,6 +13,11 @@
     }
   ],
   "settings": {
-    "editor.tabSize": 2
+    "files.exclude": {
+      "**/.git": true,
+      "**/.DS_Store": true,
+      "**/__pycache__": true,
+      "**/node_modules": true
+    }
   }
 }
